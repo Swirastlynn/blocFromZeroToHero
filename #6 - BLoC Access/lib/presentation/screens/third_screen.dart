@@ -30,14 +30,14 @@ class _ThirdScreenState extends State<ThirdScreen> {
             BlocConsumer<CounterCubit, CounterState>(
               listener: (context, state) {
                 if (state.wasIncremented == true) {
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Incremented!'),
                       duration: Duration(milliseconds: 300),
                     ),
                   );
                 } else if (state.wasIncremented == false) {
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Decremented!'),
                       duration: Duration(milliseconds: 300),
@@ -89,7 +89,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
                   heroTag: Text('${widget.title} 2nd'),
                   onPressed: () {
                     // BlocProvider.of<CounterCubit>(context).increment();
-                    context.bloc<CounterCubit>().increment();
+                    context.read<CounterCubit>().increment();
                   },
                   tooltip: 'Increment',
                   child: Icon(Icons.add),

@@ -24,21 +24,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class MyHomePage extends StatelessWidget {
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         child: Column(
@@ -50,14 +45,14 @@ class _MyHomePageState extends State<MyHomePage> {
             BlocConsumer<CounterCubit, CounterState>(
               listener: (context, state) {
                 if (state.wasIncremented == true) {
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Incremented!'),
                       duration: Duration(milliseconds: 300),
                     ),
                   );
                 } else if (state.wasIncremented == false) {
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Decremented!'),
                       duration: Duration(milliseconds: 300),
@@ -95,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton(
-                  heroTag: Text('${widget.title}'),
+                  heroTag: Text('$title'),
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrement();
                     // context.bloc<CounterCubit>().decrement();
@@ -104,10 +99,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Icon(Icons.remove),
                 ),
                 FloatingActionButton(
-                  heroTag: Text('${widget.title} #2'),
+                  heroTag: Text('$title #2'),
                   onPressed: () {
                     // BlocProvider.of<CounterCubit>(context).increment();
-                    context.bloc<CounterCubit>().increment();
+                    context.read<CounterCubit>().increment();
                   },
                   tooltip: 'Increment',
                   child: Icon(Icons.add),

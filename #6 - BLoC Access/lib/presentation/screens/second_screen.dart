@@ -38,17 +38,17 @@ class _SecondScreenState extends State<SecondScreen> {
             BlocConsumer<CounterCubit, CounterState>(
               listener: (context, state) {
                 if (state.wasIncremented == true) {
-                  widget.homeScreenKey.currentState.removeCurrentSnackBar();
-                  secondScreenKey.currentState.showSnackBar(
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Incremented!'),
                       duration: Duration(milliseconds: 300),
                     ),
                   );
                 } else if (state.wasIncremented == false) {
-                  widget.homeScreenKey.currentState.removeCurrentSnackBar();
-                  secondScreenKey.currentState.removeCurrentSnackBar();
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Decremented!'),
                       duration: Duration(milliseconds: 300),
@@ -100,7 +100,7 @@ class _SecondScreenState extends State<SecondScreen> {
                   heroTag: Text('${widget.title} 2nd'),
                   onPressed: () {
                     // BlocProvider.of<CounterCubit>(context).increment();
-                    context.bloc<CounterCubit>().increment();
+                    context.read<CounterCubit>().increment();
                   },
                   tooltip: 'Increment',
                   child: Icon(Icons.add),
